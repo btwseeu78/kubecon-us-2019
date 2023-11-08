@@ -17,29 +17,48 @@ limitations under the License.
 package v1alpha1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+type FrontendSpec struct {
+
+	// +optional
+	Resources corev1.ResourceRequirements `json:"resources"`
+
+	// +optional
+	// +kubebuilder:default=8080
+	// +kubebuilder:validation:Minimum=0
+	ServingPort int32 `json:"servingPort"`
+
+
+	// +optional
+	// +kubebuilder:default=1
+	// +kubebuilder:validation:Minimum=0
+	Replicas *int32 `json:"replicas,omitempty"`
+
+}
+
 // GuestBookSpec defines the desired state of GuestBook
 type GuestBookSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of GuestBook. Edit guestbook_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Frontend FrontendSpec `json:"frontend"`
+	RedisName string `json:"redisNamw,omitempty"`
 }
+
 
 // GuestBookStatus defines the observed state of GuestBook
 type GuestBookStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	URL string `json:"url"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:printcolumn:JSONPath=".status.url",name="URL",type="string"
+//+kubebuilder:printcolumn:JSONPath=".spec.frontend.replicas",name="Desired",type="integer"
 
 // GuestBook is the Schema for the guestbooks API
 type GuestBook struct {
