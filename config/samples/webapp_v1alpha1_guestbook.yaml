@@ -1,0 +1,12 @@
+apiVersion: webapp.webapp.arpan.dev/v1alpha1
+kind: GuestBook
+metadata:
+  labels:
+    app.kubernetes.io/name: guestbook
+    app.kubernetes.io/instance: guestbook-sample
+    app.kubernetes.io/part-of: kubecon-us-2019
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: kubecon-us-2019
+  name: guestbook-sample
+spec:
+  # TODO(user): Add fields here
