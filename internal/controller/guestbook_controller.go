@@ -19,10 +19,12 @@ package controller
 import (
 	"context"
 
+	"github.com/go-logr/logr"
+	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	webappv1alpha1 "arpan.dev/kubecon-us-2019/api/v1alpha1"
 )
@@ -30,6 +32,7 @@ import (
 // GuestBookReconciler reconciles a GuestBook object
 type GuestBookReconciler struct {
 	client.Client
+	Log    logr.Logger
 	Scheme *runtime.Scheme
 }
 
@@ -47,9 +50,29 @@ type GuestBookReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.16.0/pkg/reconcile
 func (r *GuestBookReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	log := r.Log.WithValues("guestbook", req.NamespacedName)
+	log.Info("Starting Reconcile", req.NamespacedName)
 
-	// TODO(user): your logic here
+	guestbook := webappv1alpha1.GuestBook{}
+	if err := r.Get(ctx, req.NamespacedName, &guestbook); err != nil {
+		if errors.IsNotFound(err) {
+			log.Info("Unable to Find The Object", req.NamespacedName)
+			return ctrl.Result{}, nil
+		} else if err != nil {
+			return ctrl.Result{}, err
+		}
+	}
+	var redis webappv1alpha1.Redis
+
+	err := r.Get(ctx, types.NamespacedName{Name: guestbook.Spec.RedisName, Namespace: req.Namespace}, &redis)
+
+	if err != nil && errors.IsNotFound(err) {
+		log.Info("Unable to find The Redis Object with name", guestbook.Spec.RedisName)
+		return ctrl.Result{}, nil
+	} else if err != nil {
+		log.Info("Unable to get Data Check Api and Permissions")
+		return ctrl.Result{}, err
+	}
 
 	return ctrl.Result{}, nil
 }

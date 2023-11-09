@@ -41,9 +41,9 @@ type RedisStatus struct {
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-//+kubebuilder:printcolumn:JSONPath=".status.leaderService",name="Leader", type="string"
-//+kubebuilder:printcolumn:JSONPath=".status.followerService",name="Follower", type="string"
-//+kubebuilder:printcolumn:JSONPath=".status.followerReplicas,name="Desired", type="integer"
+//+kubebuilder:printcolumn:JSONPath=".status.leaderService",name="Leader",type="string"
+//+kubebuilder:printcolumn:JSONPath=".status.followerService",name="Follower",type="string"
+//+kubebuilder:printcolumn:JSONPath=".status.followerReplicas",name="Desired",type="integer"
 
 // Redis is the Schema for the redis API
 type Redis struct {
