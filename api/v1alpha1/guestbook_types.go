@@ -19,7 +19,6 @@ package v1alpha1
 import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -35,24 +34,22 @@ type FrontendSpec struct {
 	// +kubebuilder:validation:Minimum=0
 	ServingPort int32 `json:"servingPort"`
 
-
 	// +optional
 	// +kubebuilder:default=1
 	// +kubebuilder:validation:Minimum=0
 	Replicas *int32 `json:"replicas,omitempty"`
-
 }
 
 // GuestBookSpec defines the desired state of GuestBook
 type GuestBookSpec struct {
-	Frontend FrontendSpec `json:"frontend"`
-	RedisName string `json:"redisNamw,omitempty"`
+	Frontend  FrontendSpec `json:"frontend"`
+	RedisName string       `json:"redisName,omitempty"`
 }
-
 
 // GuestBookStatus defines the observed state of GuestBook
 type GuestBookStatus struct {
-	URL string `json:"url"`
+	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+	// Important: Run "make" to regenerate code after modifying this file
 }
 
 //+kubebuilder:object:root=true

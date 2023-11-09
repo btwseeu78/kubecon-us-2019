@@ -1,4 +1,4 @@
-apiVersion: webapp.webapp.arpan.dev/v1alpha1
+apiVersion: webapp.arpan.dev/v1alpha1
 kind: Redis
 metadata:
   labels:

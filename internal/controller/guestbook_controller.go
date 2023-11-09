@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	webappv1alpha1 "webapp.arpan.dev/kubecon-us-2019/api/v1alpha1"
+	webappv1alpha1 "arpan.dev/kubecon-us-2019/api/v1alpha1"
 )
 
 // GuestBookReconciler reconciles a GuestBook object
@@ -33,9 +33,9 @@ type GuestBookReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=webapp.webapp.arpan.dev,resources=guestbooks,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=webapp.webapp.arpan.dev,resources=guestbooks/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=webapp.webapp.arpan.dev,resources=guestbooks/finalizers,verbs=update
+//+kubebuilder:rbac:groups=webapp.arpan.dev,resources=guestbooks,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=webapp.arpan.dev,resources=guestbooks/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=webapp.arpan.dev,resources=guestbooks/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

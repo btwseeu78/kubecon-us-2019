@@ -1,5 +1,5 @@
 ## Append samples of your project ##
 resources:
-- webapp_v1alpha1_guestbook.yaml
 - webapp_v1alpha1_redis.yaml
+- webapp_v1alpha1_guestbook.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

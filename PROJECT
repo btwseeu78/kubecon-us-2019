@@ -2,28 +2,28 @@
 # This file is used to track the info used to scaffold your project
 # and allow the plugins properly work.
 # More info: https://book.kubebuilder.io/reference/project-config.html
-domain: webapp.arpan.dev
+domain: arpan.dev
 layout:
 - go.kubebuilder.io/v4
 projectName: kubecon-us-2019
-repo: webapp.arpan.dev/kubecon-us-2019
+repo: arpan.dev/kubecon-us-2019
 resources:
 - api:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: webapp.arpan.dev
+  domain: arpan.dev
   group: webapp
-  kind: GuestBook
-  path: webapp.arpan.dev/kubecon-us-2019/api/v1alpha1
+  kind: Redis
+  path: arpan.dev/kubecon-us-2019/api/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: webapp.arpan.dev
+  domain: arpan.dev
   group: webapp
-  kind: Redis
-  path: webapp.arpan.dev/kubecon-us-2019/api/v1alpha1
+  kind: GuestBook
+  path: arpan.dev/kubecon-us-2019/api/v1alpha1
   version: v1alpha1
 version: "3"

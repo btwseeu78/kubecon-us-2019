@@ -25,7 +25,6 @@ import (
 
 // RedisSpec defines the desired state of Redis
 type RedisSpec struct {
-
 	// +optional
 	// +kubebuilder:default=1
 	// +kubebuilder:validation:Minimum=0
@@ -36,9 +35,8 @@ type RedisSpec struct {
 type RedisStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	LeaderService string `json:"leaderService"`
+	LeaderService   string `json:"leaderService"`
 	FollowerService string `json:"followerService"`
-
 }
 
 //+kubebuilder:object:root=true
@@ -46,7 +44,6 @@ type RedisStatus struct {
 //+kubebuilder:printcolumn:JSONPath=".status.leaderService",name="Leader", type="string"
 //+kubebuilder:printcolumn:JSONPath=".status.followerService",name="Follower", type="string"
 //+kubebuilder:printcolumn:JSONPath=".status.followerReplicas,name="Desired", type="integer"
-
 
 // Redis is the Schema for the redis API
 type Redis struct {

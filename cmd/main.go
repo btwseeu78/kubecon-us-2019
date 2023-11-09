@@ -32,8 +32,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	webappv1alpha1 "webapp.arpan.dev/kubecon-us-2019/api/v1alpha1"
-	"webapp.arpan.dev/kubecon-us-2019/internal/controller"
+	webappv1alpha1 "arpan.dev/kubecon-us-2019/api/v1alpha1"
+	"arpan.dev/kubecon-us-2019/internal/controller"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -71,7 +71,7 @@ func main() {
 		Metrics:                metricsserver.Options{BindAddress: metricsAddr},
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "a869157b.webapp.arpan.dev",
+		LeaderElectionID:       "0121d1ba.arpan.dev",
 		// LeaderElectionReleaseOnCancel defines if the leader should step down voluntarily
 		// when the Manager ends. This requires the binary to immediately end when the
 		// Manager is stopped, otherwise, this setting is unsafe. Setting this significantly
@@ -89,18 +89,18 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.GuestBookReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "GuestBook")
-		os.Exit(1)
-	}
 	if err = (&controller.RedisReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Redis")
+		os.Exit(1)
+	}
+	if err = (&controller.GuestBookReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "GuestBook")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

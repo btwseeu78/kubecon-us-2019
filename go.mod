@@ -1,4 +1,4 @@
-module webapp.arpan.dev/kubecon-us-2019
+module arpan.dev/kubecon-us-2019
 
 go 1.20
 
