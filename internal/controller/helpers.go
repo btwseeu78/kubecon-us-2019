@@ -5,6 +5,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
@@ -63,4 +64,38 @@ func (r *GuestBookReconciler) desiredDeployment(book webappv1alpha1.GuestBook, r
 		return depl, err
 	}
 	return depl, nil
+}
+
+func (r *GuestBookReconciler) desiredService(book webappv1alpha1.GuestBook) (corev1.Service, error) {
+	svc := corev1.Service{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: corev1.SchemeGroupVersion.String(),
+			Kind:       "Service",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      book.Name,
+			Namespace: book.Namespace,
+		},
+		Spec: corev1.ServiceSpec{
+			Type: corev1.ServiceTypeClusterIP,
+			Ports: []corev1.ServicePort{
+				{
+					Name:       "http",
+					Port:       8080,
+					Protocol:   "TCP",
+					TargetPort: intstr.FromString("http"),
+				},
+			},
+			Selector: map[string]string{
+				"guestbook": book.Name,
+			},
+		},
+	}
+
+	// we should set controller reference always.
+
+	if err := ctrl.SetControllerReference(&book, &svc, r.Scheme); err != nil {
+		return svc, err
+	}
+	return svc, nil
 }
